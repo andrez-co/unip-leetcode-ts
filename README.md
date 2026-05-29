@@ -1,2 +1,22 @@
 # unip-leetcode-ts
-Taller en parejas: cada uno resuelve 5 ejercicios de LeetCode en TypeScript con PRs obligatorios, y juntos crean una Quiz App con React Router, Tailwind, timer, high score, modo oscuro, sonidos, 4 tests y despliegue en Netlify con CI/CD. Entregan PDF con links y video de 5 min mostrando PRs, código, tests y app funcionando.
+
+Entorno inicial para el proyecto de parejas, con React + TypeScript + Vite + Tailwind + React Router.
+
+## Comandos
+
+- `pnpm install`
+- `pnpm dev`
+- `pnpm build`
+- `pnpm preview`
+- `pnpm lint`
+- `pnpm test`
+
+## Estructura inicial
+
+- `src/` contiene los componentes base y la configuración de rutas.
+- `tailwind.config.js` configura Tailwind CSS.
+- `vite.config.ts` habilita React en Vite.
+- `tsconfig.json` define TypeScript.
+- `.eslintrc.cjs` configura reglas de lint.
+
+> Este repositorio es una base para comenzar el proyecto colaborativo sin implementar aún la lógica de la aplicación.
