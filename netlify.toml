@@ -2,7 +2,7 @@
 [build]
 command = "pnpm build"
 publish = "dist"
-node_version = "18"
+node_version = "20"
 
 # Redirect rules for SPA (Single Page Application)
 [[redirects]]
