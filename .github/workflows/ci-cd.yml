@@ -1,0 +1,77 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [20.x]
+    
+    steps:
+      # 1. Checkout del código
+      - uses: actions/checkout@v4
+      
+      # 2. Configurar pnpm
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.10.0
+      
+      # 3. Configurar Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+      
+      # 4. Instalar dependencias
+      - name: Install dependencies
+        run: pnpm install
+      
+      # 5. Verificar tipos con TypeScript
+      - name: Type check
+        run: pnpm typecheck
+      
+      # 6. Ejecutar linting
+      - name: Lint code
+        run: pnpm lint
+      
+      # 7. Ejecutar tests
+      - name: Run tests
+        run: pnpm test
+      
+      # 8. Build de la aplicación
+      - name: Build application
+        run: pnpm build
+      
+      # 9. Verificar que el build fue exitoso
+      - name: Verify build output
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "Build failed: dist directory not found"
+            exit 1
+          fi
+      
+      # 10. Deploy a Netlify
+      - name: Deploy to Netlify
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        uses: nwtgck/actions-netlify@v2.0
+        with:
+          publish-dir: './dist'
+          production-deploy: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Deploy from GitHub Actions'
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
