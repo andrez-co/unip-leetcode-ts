@@ -27,3 +27,6 @@ coverage/
 
 # Local caches
 .cache/
+
+GITHUB_ACTIONS_SETUP.md
+NETLIFY_DEPLOYMENT.md
