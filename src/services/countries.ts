@@ -1,6 +1,6 @@
 import type { CountryApiItem } from '../types/quiz';
 
-const COUNTRIES_ENDPOINT = 'https://restcountries.com/v3.1/all?limit=10';
+const COUNTRIES_ENDPOINT = 'https://restcountries.com/v3.1/all?fields=name,capital,flags';
 
 export async function fetchCountries(): Promise<CountryApiItem[]> {
   const response = await fetch(COUNTRIES_ENDPOINT);
